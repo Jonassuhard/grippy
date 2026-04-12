@@ -40,7 +40,7 @@ export function PickGripScreen({
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={grip === "pressure" ? "/grip-pressure-object.png" : grip === "rotation" ? "/grip-rotation-object.png" : "/grip-relaxation-object.png"}
+              src={grip === "pressure" ? "/grip-pressure.png" : grip === "rotation" ? "/grip-rotation-object.png" : "/grip-relaxation-object.png"}
               alt={grip}
               width={80}
               height={80}

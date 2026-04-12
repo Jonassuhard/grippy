@@ -9,6 +9,7 @@ export type AppScreen =
   | "training"
   | "exercise"
   | "relax"
+  | "cooldown"
   | "bravo"
   | "comeBack";
 

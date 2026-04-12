@@ -8,6 +8,7 @@ import { BluetoothScreen } from "@/components/screens/BluetoothScreen";
 import { DurationScreen } from "@/components/screens/DurationScreen";
 import { PickGripScreen } from "@/components/screens/PickGripScreen";
 import { ExerciseScreen } from "@/components/screens/ExerciseScreen";
+import { CooldownScreen } from "@/components/screens/CooldownScreen";
 import { BravoScreen } from "@/components/screens/BravoScreen";
 import { ComeBackScreen } from "@/components/screens/ComeBackScreen";
 
@@ -80,8 +81,16 @@ export default function Home() {
             lang={state.lang}
             onComplete={() => {
               levelUp(state.selectedGrip!);
-              goTo("bravo");
+              goTo("cooldown");
             }}
+          />
+        )}
+
+        {state.screen === "cooldown" && (
+          <CooldownScreen
+            key="cooldown"
+            lang={state.lang}
+            onComplete={() => goTo("bravo")}
           />
         )}
 
