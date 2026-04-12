@@ -103,7 +103,8 @@ export function ExerciseScreen({
             exit={{ opacity: 0 }}
           >
             <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
-            <HandIllustration type={gripType} size={180} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/hand-outline.png" alt="training zone" width={180} height={180} style={{ objectFit: "contain" }} />
             <div className="mt-6">
               <TimerDisplay seconds={secondsLeft} />
             </div>
@@ -128,12 +129,19 @@ export function ExerciseScreen({
               {lang === "fr" ? currentExercise.titleFr : currentExercise.title}
             </h2>
 
-            {/* Animated hand illustration */}
+            {/* Animated exercise illustration from Figma */}
             <motion.div
               animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
               transition={{ repeat: Infinity, duration: 3 }}
             >
-              <HandIllustration type={gripType} size={160} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={gripType === "pressure" ? "/exercise-pressure.png" : gripType === "rotation" ? "/exercise-rotation.png" : "/exercise-relaxation.png"}
+                alt={`${gripType} exercise`}
+                width={200}
+                height={140}
+                style={{ objectFit: "contain" }}
+              />
             </motion.div>
 
             <p className="text-sm text-[#7A4A3F] opacity-60 mt-4 text-center px-4">
@@ -178,7 +186,8 @@ export function ExerciseScreen({
             exit={{ opacity: 0 }}
           >
             <h2 className="text-2xl font-bold text-[#7A4A3F] mb-2">{t.relax}</h2>
-            <HandIllustration type="relaxation" size={160} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/relax-palms.png" alt="palm to palm rest" width={200} height={140} style={{ objectFit: "contain" }} />
             <h3 className="text-lg font-semibold text-[#7A4A3F] mt-4">{t.palmToPalm}</h3>
             <div className="mt-4">
               <TimerDisplay seconds={exerciseTimer} />

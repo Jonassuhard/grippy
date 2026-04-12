@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ScreenWrapper, PillButton, AnimatedCheck, BluetoothIcon } from "@/components/ui";
+import { ScreenWrapper, PillButton, AnimatedCheck } from "@/components/ui";
 import type { GripDevice } from "@/types";
 
 const FAKE_DEVICES: GripDevice[] = [
@@ -59,29 +59,15 @@ export function BluetoothScreen({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        {/* Header icons */}
-        <div className="flex items-center justify-center gap-4 mb-6">
+        {/* Header — real Figma bluetooth illustration */}
+        <div className="flex items-center justify-center mb-6">
           <motion.div
-            animate={{ rotate: scanning ? [0, 15, -15, 0] : 0 }}
+            animate={{ opacity: scanning ? [0.6, 1, 0.6] : 1 }}
             transition={{ repeat: scanning ? Infinity : 0, duration: 1.5 }}
           >
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="#7A4A3F">
-              <circle cx="20" cy="20" r="15" fill="none" stroke="#7A4A3F" strokeWidth="2" />
-              <circle cx="20" cy="15" r="4" />
-              <path d="M12 28 Q20 22 28 28" stroke="#7A4A3F" strokeWidth="2" fill="none" />
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/bluetooth-icon.png" alt="Bluetooth" width={200} height={140} style={{ objectFit: "contain" }} />
           </motion.div>
-          {/* Signal waves */}
-          <motion.div
-            animate={{ opacity: scanning ? [0.3, 1, 0.3] : 1 }}
-            transition={{ repeat: scanning ? Infinity : 0, duration: 1 }}
-          >
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#7A4A3F" strokeWidth="2">
-              <path d="M10 15 Q15 5 20 15" />
-              <path d="M7 15 Q15 0 23 15" opacity="0.5" />
-            </svg>
-          </motion.div>
-          <BluetoothIcon size={35} />
         </div>
 
         {/* Device list */}

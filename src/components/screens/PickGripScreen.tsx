@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ScreenWrapper, HandIllustration } from "@/components/ui";
+import { ScreenWrapper } from "@/components/ui";
 import type { GripType, ExerciseLevel } from "@/types";
 import { GRIP_LABELS, LEVEL_COLORS } from "@/types";
 
@@ -38,7 +38,14 @@ export function PickGripScreen({
             whileTap={{ scale: 0.97 }}
             onClick={() => onSelect(grip)}
           >
-            <HandIllustration type={grip} size={80} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={grip === "pressure" ? "/grip-pressure-object.png" : grip === "rotation" ? "/grip-rotation-object.png" : "/grip-relaxation-object.png"}
+              alt={grip}
+              width={80}
+              height={80}
+              style={{ objectFit: "contain" }}
+            />
             <div className="flex-1 text-left">
               <h3 className="text-xl font-bold text-[#7A4A3F]">
                 {GRIP_LABELS[grip][lang]}
