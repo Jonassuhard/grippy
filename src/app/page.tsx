@@ -113,6 +113,7 @@ export default function Home() {
           level={state.currentLevel[state.selectedGrip]}
           durationMinutes={state.selectedDuration}
           lang={state.lang}
+          onBackToMenu={() => goTo("pickGrip")}
           onComplete={() => {
             levelUp(state.selectedGrip!);
             if (state.uid) {
@@ -134,7 +135,7 @@ export default function Home() {
       {state.screen === "bravo" && (
         <BravoScreen
           lang={state.lang}
-          onNext={() => goTo("comeBack")}
+          onNext={() => goTo("pickGrip")}
         />
       )}
 
