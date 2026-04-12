@@ -103,10 +103,20 @@ export function ExerciseScreen({
             exit={{ opacity: 0 }}
           >
             <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hand-outline.png" alt="training zone" width={180} height={180} style={{ objectFit: "contain" }} />
-            <div className="mt-6">
-              <TimerDisplay seconds={secondsLeft} />
+            {/* Hand outline with grip zone overlay — matches Figma slide 5 */}
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/hand-outline.png" alt="training zone" width={200} height={200} style={{ objectFit: "contain" }} />
+              {/* Grip zone overlay on palm */}
+              <div className="absolute bottom-8 right-4 w-24 h-16 rounded-2xl bg-[rgba(162,96,87,0.2)]" />
+            </div>
+            {/* Duration circle — like Figma "10'" */}
+            <div className="flex items-center gap-2 mt-6">
+              <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
+              <div className="w-16 h-16 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
+                <span className="text-lg font-bold text-[#7A4A3F]">{durationMinutes}&apos;</span>
+              </div>
+              <div className="w-2 h-2 rounded-full bg-[rgba(122,74,63,0.15)]" />
             </div>
             <p className="text-sm text-[#7A4A3F] opacity-50 mt-2">
               {GRIP_LABELS[gripType][lang]} &middot; Level {level}
@@ -148,8 +158,13 @@ export function ExerciseScreen({
               {lang === "fr" ? currentExercise.descriptionFr : currentExercise.description}
             </p>
 
-            <div className="mt-6">
-              <TimerDisplay seconds={exerciseTimer} />
+            {/* Timer circle — matches Figma style */}
+            <div className="flex items-center gap-2 mt-6">
+              <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
+              <div className="w-20 h-20 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
+                <TimerDisplay seconds={exerciseTimer} />
+              </div>
+              <div className="w-2 h-2 rounded-full bg-[rgba(122,74,63,0.15)]" />
             </div>
 
             <div className="flex gap-3 mt-6 w-full">
