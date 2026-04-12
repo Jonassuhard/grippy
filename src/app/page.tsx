@@ -16,19 +16,22 @@ import { ComeBackScreen } from "@/components/screens/ComeBackScreen";
 export default function Home() {
   const { state, goTo, setProfile, setGrip, setDuration, setLang, levelUp, setLevels, setUid } = useAppState();
 
-  // Auto-login Firebase + load saved levels + register SW
+  // Auto-login Firebase + load saved levels + register SW (delayed to avoid router init error)
   useEffect(() => {
-    (async () => {
-      const user = await signInAnon();
-      if (user) {
-        setUid(user.uid);
-        const levels = await getLevels(user.uid);
-        if (levels) setLevels(levels);
+    const timer = setTimeout(() => {
+      (async () => {
+        const user = await signInAnon();
+        if (user) {
+          setUid(user.uid);
+          const levels = await getLevels(user.uid);
+          if (levels) setLevels(levels);
+        }
+      })();
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
       }
-    })();
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js");
-    }
+    }, 100);
+    return () => clearTimeout(timer);
   }, [setUid, setLevels]);
 
   const screenOrder: Record<string, string> = {
