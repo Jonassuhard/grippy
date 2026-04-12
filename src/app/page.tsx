@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useAppState } from "@/lib/store";
+import { signInAnon, getLevels, saveLevels } from "@/lib/firebase";
 import { SplashScreen } from "@/components/screens/SplashScreen";
 import { ProfileScreen } from "@/components/screens/ProfileScreen";
 import { BluetoothScreen } from "@/components/screens/BluetoothScreen";
@@ -13,7 +15,22 @@ import { BravoScreen } from "@/components/screens/BravoScreen";
 import { ComeBackScreen } from "@/components/screens/ComeBackScreen";
 
 export default function Home() {
-  const { state, goTo, setProfile, setGrip, setDuration, setLang, levelUp } = useAppState();
+  const { state, goTo, setProfile, setGrip, setDuration, setLang, levelUp, setLevels, setUid } = useAppState();
+
+  // Auto-login Firebase + load saved levels + register SW
+  useEffect(() => {
+    (async () => {
+      const user = await signInAnon();
+      if (user) {
+        setUid(user.uid);
+        const levels = await getLevels(user.uid);
+        if (levels) setLevels(levels);
+      }
+    })();
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  }, [setUid, setLevels]);
 
   const screenOrder: Record<string, string> = {
     profile: "splash",
@@ -102,6 +119,10 @@ export default function Home() {
             lang={state.lang}
             onComplete={() => {
               levelUp(state.selectedGrip!);
+              if (state.uid) {
+                const newLevels = { ...state.currentLevel, [state.selectedGrip!]: Math.min(4, state.currentLevel[state.selectedGrip!] + 1) as 0|1|2|3|4 };
+                saveLevels(state.uid, newLevels);
+              }
               goTo("cooldown");
             }}
           />

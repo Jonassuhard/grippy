@@ -135,6 +135,15 @@ export function ExerciseScreen({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
           >
+            {/* Step indicator */}
+            <div className="flex gap-2 mb-3">
+              {exercises.map((_, idx) => (
+                <div key={idx} className={`w-2.5 h-2.5 rounded-full transition-colors ${idx <= currentIdx ? "bg-[#A26057]" : "bg-[rgba(122,74,63,0.2)]"}`} />
+              ))}
+            </div>
+            <p className="text-xs text-[#7A4A3F] opacity-50 mb-2">
+              {currentIdx + 1}/{exercises.length}
+            </p>
             <h2 className="text-xl font-bold text-[#7A4A3F] mb-4 text-center">
               {lang === "fr" ? currentExercise.titleFr : currentExercise.title}
             </h2>

@@ -11,6 +11,7 @@ export interface AppState {
   currentLevel: Record<GripType, ExerciseLevel>;
   timerSeconds: number;
   lang: "en" | "fr";
+  uid: string | null;
 }
 
 const initialState: AppState = {
@@ -21,6 +22,7 @@ const initialState: AppState = {
   currentLevel: { pressure: 0, rotation: 0, relaxation: 0 },
   timerSeconds: 0,
   lang: "fr",
+  uid: null,
 };
 
 export function useAppState() {
@@ -60,9 +62,17 @@ export function useAppState() {
     });
   }, []);
 
+  const setLevels = useCallback((levels: Record<GripType, ExerciseLevel>) => {
+    setState((s) => ({ ...s, currentLevel: levels }));
+  }, []);
+
+  const setUid = useCallback((uid: string) => {
+    setState((s) => ({ ...s, uid }));
+  }, []);
+
   const reset = useCallback(() => {
     setState((s) => ({ ...s, screen: "splash", selectedGrip: null, selectedDuration: 10 }));
   }, []);
 
-  return { state, goTo, setProfile, setGrip, setDuration, setLang, levelUp, reset };
+  return { state, goTo, setProfile, setGrip, setDuration, setLang, levelUp, setLevels, setUid, reset };
 }

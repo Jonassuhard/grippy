@@ -44,6 +44,17 @@ export function DurationScreen({
             </motion.div>
           ))}
         </div>
+
+        {/* Hand illustration — like Figma slide 4 */}
+        <motion.div
+          className="flex justify-center mt-6 opacity-40"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 0.5 }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/hand-outline.png" alt="" width={120} height={120} style={{ objectFit: "contain" }} />
+        </motion.div>
       </motion.div>
     </ScreenWrapper>
   );

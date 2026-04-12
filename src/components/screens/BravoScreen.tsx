@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ScreenWrapper, GrippyLogo, PillButton } from "@/components/ui";
 
@@ -10,14 +11,26 @@ export function BravoScreen({
   onNext: () => void;
   lang: "en" | "fr";
 }) {
-  // Generate confetti particles
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  // Play bravo sound
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    audioRef.current = new Audio("/bravo.wav");
+    audioRef.current.volume = 0.6;
+    audioRef.current.play().catch(() => {});
+    navigator?.vibrate?.([10, 30, 10]);
+  }, []);
+
+  // Generate confetti particles with gravity physics
+  const particles = Array.from({ length: 40 }, (_, i) => ({
     id: i,
-    x: Math.random() * 300 - 150,
-    y: Math.random() * -200 - 50,
-    size: Math.random() * 8 + 4,
-    color: ["#C4877A", "#A26057", "#E8C5BD", "#7A4A3F", "#D4988C"][i % 5],
-    delay: Math.random() * 0.5,
+    startX: Math.random() * 400 - 200,
+    peakY: -(Math.random() * 300 + 100),
+    endY: 500,
+    size: Math.random() * 10 + 4,
+    rotation: Math.random() * 720 - 360,
+    color: ["#C4877A", "#A26057", "#E8C5BD", "#7A4A3F", "#D4988C", "#F0C4B8", "#8B5E54"][i % 7],
+    delay: Math.random() * 0.8,
+    shape: i % 3 === 0 ? "circle" : i % 3 === 1 ? "square" : "rect",
   }));
 
   const t = lang === "fr"
@@ -26,30 +39,33 @@ export function BravoScreen({
 
   return (
     <ScreenWrapper>
-      {/* Confetti */}
+      {/* Confetti with gravity */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map((p) => (
           <motion.div
             key={p.id}
-            className="absolute rounded-full"
+            className="absolute"
             style={{
               width: p.size,
-              height: p.size,
+              height: p.shape === "rect" ? p.size * 0.4 : p.size,
               backgroundColor: p.color,
+              borderRadius: p.shape === "circle" ? "50%" : p.shape === "rect" ? "1px" : "2px",
               left: "50%",
-              top: "50%",
+              top: "40%",
             }}
-            initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
+            initial={{ x: 0, y: 0, opacity: 0, scale: 0, rotate: 0 }}
             animate={{
-              x: p.x,
-              y: p.y,
+              x: p.startX,
+              y: [0, p.peakY, p.endY],
               opacity: [0, 1, 1, 0],
-              scale: [0, 1.2, 1, 0.5],
+              scale: [0, 1.3, 1, 0.8],
+              rotate: p.rotation,
             }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               delay: p.delay,
-              ease: "easeOut",
+              ease: [0.22, 1, 0.36, 1],
+              y: { duration: 2.5, delay: p.delay, ease: [0.22, 0.8, 0.36, 1] },
             }}
           />
         ))}

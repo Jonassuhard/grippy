@@ -2,8 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+import { Radar, Bar } from "react-chartjs-2";
 import type { PatientData, GripType, ExerciseLevel } from "@/types";
 import { GRIP_LABELS, LEVEL_COLORS } from "@/types";
+
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, BarElement, CategoryScale, LinearScale);
 
 // Mock data for demo (when Firebase is not configured)
 const MOCK_PATIENTS: PatientData[] = [
@@ -208,6 +221,26 @@ export default function DashboardPage() {
                       <h4 className="text-sm font-semibold text-[#7A4A3F] mb-3">Progress levels</h4>
                       <LevelDots levels={patient.currentLevels} />
 
+                      {/* Radar chart — grip levels */}
+                      <div className="mt-4 w-48 h-48 mx-auto">
+                        <Radar
+                          data={{
+                            labels: ["Pression", "Rotation", "Relaxation"],
+                            datasets: [{
+                              data: [patient.currentLevels.pressure, patient.currentLevels.rotation, patient.currentLevels.relaxation],
+                              backgroundColor: "rgba(162, 96, 87, 0.2)",
+                              borderColor: "#A26057",
+                              borderWidth: 2,
+                              pointBackgroundColor: "#A26057",
+                            }],
+                          }}
+                          options={{
+                            scales: { r: { min: 0, max: 4, ticks: { stepSize: 1, display: false }, grid: { color: "rgba(122,74,63,0.15)" }, pointLabels: { font: { size: 10, family: "Fredoka" }, color: "#7A4A3F" } } },
+                            plugins: { legend: { display: false } },
+                          }}
+                        />
+                      </div>
+
                       <h4 className="text-sm font-semibold text-[#7A4A3F] mt-4 mb-2">Overall progress</h4>
                       <ProgressBar
                         value={
@@ -226,15 +259,8 @@ export default function DashboardPage() {
                             12) *
                             100
                         )}
-                        % of maximum level reached
+                        % complete
                       </p>
-
-                      <div className="mt-4 p-3 bg-[rgba(122,74,63,0.08)] rounded-xl">
-                        <p className="text-xs text-[#7A4A3F] opacity-60">
-                          Discharge: {patient.profile.dischargeDate} &middot;
-                          Avg {(patient.sessionsCompleted / Math.max(1, Math.ceil((Date.now() - new Date(patient.profile.dischargeDate).getTime()) / 86400000 / 7))).toFixed(1)} sessions/week
-                        </p>
-                      </div>
                     </div>
                   </motion.div>
                 )}

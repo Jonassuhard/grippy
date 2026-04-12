@@ -46,7 +46,7 @@ export function PillButton({
   return (
     <motion.button
       className={`${base} ${variants[variant]} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`}
-      onClick={disabled ? undefined : onClick}
+      onClick={disabled ? undefined : () => { navigator?.vibrate?.(8); onClick?.(); }}
       whileHover={disabled ? undefined : { scale: 1.03, boxShadow: "0 8px 25px rgba(122,74,63,0.25)" }}
       whileTap={disabled ? undefined : { scale: 0.93 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
