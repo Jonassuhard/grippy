@@ -43,7 +43,7 @@ export default function Home() {
         onClick={() => setLang(state.lang === "en" ? "fr" : "en")}
         className="fixed top-4 right-4 z-50 bg-[rgba(226,192,184,0.6)] backdrop-blur-sm rounded-full px-3 py-1.5 text-sm font-semibold text-[#7A4A3F] cursor-pointer hover:bg-[rgba(226,192,184,0.9)] transition-colors"
       >
-        {state.lang === "en" ? "FR" : "EN"}
+        {state.lang === "fr" ? "FR" : "ENG"}
       </button>
 
       <AnimatePresence mode="wait">

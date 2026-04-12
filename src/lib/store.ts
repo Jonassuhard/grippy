@@ -20,7 +20,7 @@ const initialState: AppState = {
   selectedDuration: 10,
   currentLevel: { pressure: 0, rotation: 0, relaxation: 0 },
   timerSeconds: 0,
-  lang: "en",
+  lang: "fr",
 };
 
 export function useAppState() {
