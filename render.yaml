@@ -2,9 +2,11 @@ services:
   - type: web
     name: grippy
     runtime: node
-    buildCommand: npm install && npm run build
+    buildCommand: export NODE_VERSION=22 && npm install && npm run build
     startCommand: npm start
     envVars:
+      - key: NODE_VERSION
+        value: "22"
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_FIREBASE_API_KEY
