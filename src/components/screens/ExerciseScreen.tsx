@@ -164,7 +164,7 @@ export function ExerciseScreen({
             {/* Progress bar */}
             <div className="w-full mt-4 bg-[rgba(122,74,63,0.15)] rounded-full h-2">
               <motion.div
-                className="bg-[#A06B5F] h-2 rounded-full"
+                className="bg-[#A26057] h-2 rounded-full"
                 initial={{ width: "0%" }}
                 animate={{
                   width: `${((durationMinutes * 60 - secondsLeft) / (durationMinutes * 60)) * 100}%`,

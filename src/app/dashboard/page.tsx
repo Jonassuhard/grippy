@@ -101,7 +101,7 @@ export default function DashboardPage() {
             value={loginCode}
             onChange={(e) => setLoginCode(e.target.value)}
             placeholder="Access code"
-            className="w-full bg-[#A06B5F] text-[#F5E6E1] placeholder-[rgba(245,230,225,0.5)] rounded-full px-6 py-4 font-medium text-center text-lg outline-none mb-4"
+            className="w-full bg-[#A26057] text-[#F5E6E1] placeholder-[rgba(245,230,225,0.5)] rounded-full px-6 py-4 font-medium text-center text-lg outline-none mb-4"
           />
 
           <button
@@ -134,7 +134,7 @@ export default function DashboardPage() {
         </div>
         <button
           onClick={() => setIsLoggedIn(false)}
-          className="text-sm text-[#A06B5F] hover:underline cursor-pointer"
+          className="text-sm text-[#A26057] hover:underline cursor-pointer"
         >
           Logout
         </button>
@@ -216,7 +216,7 @@ export default function DashboardPage() {
                           patient.currentLevels.relaxation
                         }
                         max={12}
-                        color="#A06B5F"
+                        color="#A26057"
                       />
                       <p className="text-xs text-[#7A4A3F] opacity-40 mt-1">
                         {Math.round(

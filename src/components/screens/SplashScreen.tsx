@@ -14,7 +14,7 @@ export function SplashScreen({ onNext }: { onNext: () => void }) {
       >
         <GrippyLogo size={220} />
         <motion.h1
-          className="text-5xl font-bold text-[#A06B5F] tracking-tight"
+          className="text-5xl font-bold text-[#A26057] tracking-tight"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}

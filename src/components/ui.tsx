@@ -38,9 +38,9 @@ export function PillButton({
 }) {
   const base = "rounded-full px-8 py-4 font-semibold text-lg transition-all duration-200 w-full";
   const variants = {
-    primary: "bg-[#A06B5F] text-[#F5E6E1] hover:bg-[#8A5A50] active:scale-95",
+    primary: "bg-[#A26057] text-[#F5E6E1] hover:bg-[#8A5A50] active:scale-95",
     secondary: "bg-[rgba(226,192,184,0.5)] text-[#7A4A3F] hover:bg-[rgba(226,192,184,0.8)]",
-    ghost: "bg-transparent text-[#7A4A3F] border-2 border-[#A06B5F] hover:bg-[rgba(160,107,95,0.1)]",
+    ghost: "bg-transparent text-[#7A4A3F] border-2 border-[#A26057] hover:bg-[rgba(160,107,95,0.1)]",
   };
 
   return (
@@ -102,7 +102,7 @@ export function InputField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-[#A06B5F] text-[#F5E6E1] placeholder-[rgba(245,230,225,0.5)] rounded-full px-6 py-4 font-medium text-center text-lg outline-none focus:ring-2 focus:ring-[#7A4A3F] transition-all"
+        className="w-full bg-[#A26057] text-[#F5E6E1] placeholder-[rgba(245,230,225,0.5)] rounded-full px-6 py-4 font-medium text-center text-lg outline-none focus:ring-2 focus:ring-[#7A4A3F] transition-all"
       />
     </div>
   );

@@ -16,7 +16,7 @@ export function BravoScreen({
     x: Math.random() * 300 - 150,
     y: Math.random() * -200 - 50,
     size: Math.random() * 8 + 4,
-    color: ["#C4877A", "#A06B5F", "#E8C5BD", "#7A4A3F", "#D4988C"][i % 5],
+    color: ["#C4877A", "#A26057", "#E8C5BD", "#7A4A3F", "#D4988C"][i % 5],
     delay: Math.random() * 0.5,
   }));
 
