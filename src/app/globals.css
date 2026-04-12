@@ -47,16 +47,13 @@ body::before {
   inset: 0;
   z-index: -1;
   background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom), #C9A0B0, var(--bg-top));
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
+  background-size: 300% 300%;
+  animation: gradientShift 25s linear infinite;
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; }
-  75% { background-position: 0% 100%; }
-  100% { background-position: 0% 50%; }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }
 
 /* Mobile viewport fix */
