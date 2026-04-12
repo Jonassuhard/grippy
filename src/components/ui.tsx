@@ -47,7 +47,9 @@ export function PillButton({
     <motion.button
       className={`${base} ${variants[variant]} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`}
       onClick={disabled ? undefined : onClick}
-      whileTap={disabled ? undefined : { scale: 0.95 }}
+      whileHover={disabled ? undefined : { scale: 1.03, boxShadow: "0 8px 25px rgba(122,74,63,0.25)" }}
+      whileTap={disabled ? undefined : { scale: 0.93 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       disabled={disabled}
     >
       {children}
@@ -66,10 +68,10 @@ export function ScreenWrapper({
   return (
     <motion.div
       className={`w-full max-w-sm mx-auto min-h-dvh flex flex-col items-center justify-center px-4 py-8 ${className}`}
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      initial={{ opacity: 0, y: 30, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.97 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       {children}
     </motion.div>
@@ -148,38 +150,21 @@ export function AnimatedCheck({ delay = 0 }: { delay?: number }) {
   );
 }
 
-// ─── Logo SVG ───────────────────────────────────────────
+// ─── Logo (real image from Figma) ────────────────────────
 export function GrippyLogo({ size = 200 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 200 200" fill="none">
-      <circle cx="100" cy="100" r="90" fill="rgba(196,135,122,0.3)" />
-      {/* Simplified abstract hand shapes */}
-      <g fill="#A06B5F">
-        <ellipse cx="70" cy="60" rx="15" ry="10" />
-        <ellipse cx="100" cy="50" rx="12" ry="14" />
-        <ellipse cx="130" cy="60" rx="15" ry="10" />
-        <ellipse cx="60" cy="90" rx="10" ry="15" />
-        <ellipse cx="90" cy="85" rx="14" ry="12" />
-        <ellipse cx="120" cy="90" rx="12" ry="14" />
-        <ellipse cx="140" cy="85" rx="10" ry="12" />
-        <ellipse cx="75" cy="120" rx="14" ry="10" />
-        <ellipse cx="105" cy="115" rx="12" ry="14" />
-        <ellipse cx="130" cy="120" rx="15" ry="10" />
-        <ellipse cx="85" cy="145" rx="10" ry="8" />
-        <ellipse cx="115" cy="145" rx="10" ry="8" />
-        <rect x="65" y="68" width="25" height="8" rx="4" />
-        <rect x="110" y="68" width="25" height="8" rx="4" />
-        <rect x="80" y="130" width="40" height="6" rx="3" />
-        <circle cx="80" cy="100" r="6" />
-        <circle cx="110" cy="100" r="6" />
-        <circle cx="95" cy="75" r="5" />
-        <circle cx="125" cy="105" r="5" />
-      </g>
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/logo-grippy.png"
+      alt="Grippy logo"
+      width={size}
+      height={size}
+      style={{ objectFit: "contain" }}
+    />
   );
 }
 
-// ─── Hand Illustration (simplified) ─────────────────────
+// ─── Hand Illustration (real Figma assets) ─────────────
 export function HandIllustration({
   type,
   size = 150,
@@ -187,38 +172,21 @@ export function HandIllustration({
   type: "pressure" | "rotation" | "relaxation";
   size?: number;
 }) {
-  const colors = {
-    pressure: "#C4877A",
-    rotation: "#A06B5F",
-    relaxation: "#D4988C",
+  const images = {
+    pressure: "/grip-pressure.png",
+    rotation: "/grip-rotation.png",
+    relaxation: "/hand-open.png",
   };
 
   return (
-    <svg width={size} height={size} viewBox="0 0 150 150" fill="none">
-      <circle cx="75" cy="75" r="65" fill={`${colors[type]}33`} />
-      {type === "pressure" && (
-        <g fill={colors[type]}>
-          {/* Star/splash hand shape */}
-          <path d="M75 20 L85 50 L115 45 L95 65 L120 85 L90 80 L75 110 L60 80 L30 85 L55 65 L35 45 L65 50 Z" />
-          <circle cx="55" cy="105" r="12" fill="#7A4A3F" />
-          <ellipse cx="55" cy="105" rx="12" ry="12" fill={colors[type]} opacity="0.8" />
-        </g>
-      )}
-      {type === "rotation" && (
-        <g>
-          <circle cx="75" cy="70" r="30" fill="#7A4A3F" />
-          <ellipse cx="70" cy="65" rx="18" ry="20" fill={colors[type]} />
-        </g>
-      )}
-      {type === "relaxation" && (
-        <g fill={colors[type]}>
-          <ellipse cx="75" cy="60" rx="35" ry="25" />
-          <ellipse cx="55" cy="90" rx="15" ry="20" />
-          <ellipse cx="95" cy="90" rx="15" ry="20" />
-          <circle cx="75" cy="95" r="8" fill="#7A4A3F" opacity="0.5" />
-        </g>
-      )}
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={images[type]}
+      alt={`${type} grip`}
+      width={size}
+      height={size}
+      style={{ objectFit: "contain" }}
+    />
   );
 }
 

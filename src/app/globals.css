@@ -35,11 +35,21 @@
 
 body {
   font-family: 'Fredoka', sans-serif;
-  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom), #C9A0B0, var(--bg-top));
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
   min-height: 100dvh;
   color: var(--text-dark);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Mobile viewport fix */

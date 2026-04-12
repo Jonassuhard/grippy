@@ -59,13 +59,6 @@ export function ProfileScreen({
           type="number"
           placeholder={t.age}
         />
-        <InputField
-          label=""
-          value={profile.dischargeDate}
-          onChange={(v) => setProfile({ ...profile, dischargeDate: v })}
-          type="date"
-          placeholder={t.date}
-        />
       </motion.div>
 
       <motion.div
