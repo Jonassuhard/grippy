@@ -15,8 +15,29 @@ import { ComeBackScreen } from "@/components/screens/ComeBackScreen";
 export default function Home() {
   const { state, goTo, setProfile, setGrip, setDuration, setLang, levelUp } = useAppState();
 
+  const screenOrder: Record<string, string> = {
+    profile: "splash",
+    bluetooth: "profile",
+    duration: "bluetooth",
+    pickGrip: "duration",
+    exercise: "pickGrip",
+  };
+  const prevScreen = screenOrder[state.screen];
+
   return (
     <main className="w-full min-h-dvh relative">
+      {/* Back button */}
+      {prevScreen && (
+        <button
+          onClick={() => goTo(prevScreen as typeof state.screen)}
+          className="fixed top-4 left-4 z-50 bg-[rgba(226,192,184,0.6)] backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center text-[#7A4A3F] cursor-pointer hover:bg-[rgba(226,192,184,0.9)] transition-colors"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+      )}
+
       {/* Language toggle */}
       <button
         onClick={() => setLang(state.lang === "en" ? "fr" : "en")}
