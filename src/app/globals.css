@@ -46,9 +46,9 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom), #C9A0B0, var(--bg-top));
-  background-size: 300% 300%;
-  animation: gradientShift 25s linear infinite;
+  background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom), #C9A0B0, var(--bg-top), var(--bg-bottom), #C9A0B0, var(--bg-top));
+  background-size: 200% 200%;
+  animation: gradientShift 30s ease-in-out infinite alternate;
 }
 
 @keyframes gradientShift {
