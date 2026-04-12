@@ -1,26 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --terracotta: #C4877A;
+  --terracotta-dark: #A06B5F;
+  --terracotta-deeper: #7A4A3F;
+  --pink-light: #E8C5BD;
+  --card-bg: rgba(226, 192, 184, 0.7);
+  --card-bg-solid: #E2C0B8;
+  --bg-top: #D4988C;
+  --bg-bottom: #B8C4C8;
+  --text-dark: #7A4A3F;
+  --text-light: #F5E6E1;
+  --green-check: #6B8E6B;
+
+  /* Level colors */
+  --level-0: #F0F4C3;
+  --level-1: #FFCCBC;
+  --level-2: #C8E6C9;
+  --level-3: #B3E5FC;
+  --level-4: #E1BEE7;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-dark: var(--terracotta-dark);
+  --color-terracotta-deeper: var(--terracotta-deeper);
+  --color-pink-light: var(--pink-light);
+  --color-card-bg: var(--card-bg-solid);
+  --color-text-dark: var(--text-dark);
+  --color-text-light: var(--text-light);
+  --font-sans: 'Fredoka', sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Fredoka', sans-serif;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  min-height: 100dvh;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Mobile viewport fix */
+@supports (height: 100dvh) {
+  body { min-height: 100dvh; }
+}
+
+/* Hide scrollbar on mobile for app feel */
+body::-webkit-scrollbar { display: none; }
+body { -ms-overflow-style: none; scrollbar-width: none; }

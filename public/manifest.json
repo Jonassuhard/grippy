@@ -1,0 +1,22 @@
+{
+  "name": "Grippy — Hand Rehabilitation",
+  "short_name": "Grippy",
+  "description": "Post-stroke hand rehabilitation companion app",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#D4988C",
+  "theme_color": "#D4988C",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
