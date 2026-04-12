@@ -139,15 +139,15 @@ export function ExerciseScreen({
               {lang === "fr" ? currentExercise.titleFr : currentExercise.title}
             </h2>
 
-            {/* Animated exercise illustration from Figma */}
+            {/* Exercise illustration — cycles through Zarina's images in order */}
             <motion.div
               animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
               transition={{ repeat: Infinity, duration: 3 }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={gripType === "pressure" ? "/exercise-pressure.png" : gripType === "rotation" ? "/exercise-rotation.png" : "/exercise-relaxation.png"}
-                alt={`${gripType} exercise`}
+                src={["/ex-pression1.png", "/ex-pression2.png", "/ex-pression3.png", "/ex-relaxation.png"][Math.min(currentIdx, 3)]}
+                alt={`exercise step ${currentIdx + 1}`}
                 width={200}
                 height={140}
                 style={{ objectFit: "contain" }}
@@ -202,7 +202,7 @@ export function ExerciseScreen({
           >
             <h2 className="text-2xl font-bold text-[#7A4A3F] mb-2">{t.relax}</h2>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/relax-palms.png" alt="palm to palm rest" width={200} height={140} style={{ objectFit: "contain" }} />
+            <img src="/ex-relaxation.png" alt="relaxation" width={200} height={140} style={{ objectFit: "contain" }} />
             <h3 className="text-lg font-semibold text-[#7A4A3F] mt-4">{t.palmToPalm}</h3>
             <div className="mt-4">
               <TimerDisplay seconds={exerciseTimer} />
