@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { ScreenWrapper, GrippyLogo, PillButton } from "@/components/ui";
 
 export function BravoScreen({
-  onNext,
+  onBackToMenu,
+  onComeBackTomorrow,
   lang,
 }: {
-  onNext: () => void;
+  onBackToMenu: () => void;
+  onComeBackTomorrow: () => void;
   lang: "en" | "fr";
 }) {
   // Play bravo sound
@@ -34,8 +36,8 @@ export function BravoScreen({
   }));
 
   const t = lang === "fr"
-    ? { bravo: "BRAVO !", sub: "Exercice terminé", next: "Continuer" }
-    : { bravo: "BRAVO!", sub: "Exercise complete", next: "Continue" };
+    ? { bravo: "BRAVO !", sub: "Exercice terminé", menu: "Choisir un autre exercice", tomorrow: "Revenir demain" }
+    : { bravo: "BRAVO!", sub: "Exercise complete", menu: "Choose another exercise", tomorrow: "Come back tomorrow" };
 
   return (
     <ScreenWrapper>
@@ -89,8 +91,9 @@ export function BravoScreen({
         </p>
       </div>
 
-      <div className="w-full mt-8 relative z-10 animate-fadeIn-delay-3">
-        <PillButton onClick={onNext}>{t.next}</PillButton>
+      <div className="w-full mt-8 relative z-10 space-y-3 animate-fadeIn-delay-3">
+        <PillButton onClick={onBackToMenu}>{t.menu}</PillButton>
+        <PillButton onClick={onComeBackTomorrow} variant="ghost">{t.tomorrow}</PillButton>
       </div>
     </ScreenWrapper>
   );

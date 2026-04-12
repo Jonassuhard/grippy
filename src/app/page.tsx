@@ -135,7 +135,8 @@ export default function Home() {
       {state.screen === "bravo" && (
         <BravoScreen
           lang={state.lang}
-          onNext={() => goTo("pickGrip")}
+          onBackToMenu={() => goTo("pickGrip")}
+          onComeBackTomorrow={() => goTo("comeBack")}
         />
       )}
 
