@@ -32,12 +32,7 @@ export function CooldownScreen({
 
   return (
     <ScreenWrapper>
-      <motion.div
-        className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
-      >
+      <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
         <h2 className="text-3xl font-bold text-[#7A4A3F] mb-2">{t.title}</h2>
         <p className="text-[#7A4A3F] opacity-60 mb-6">{t.subtitle}</p>
 
@@ -73,18 +68,13 @@ export function CooldownScreen({
             }}
           />
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="w-full mt-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
+      <div className="w-full mt-6 animate-fadeIn-delay-1">
         <PillButton onClick={onComplete} variant="ghost">
           {t.skip}
         </PillButton>
-      </motion.div>
+      </div>
     </ScreenWrapper>
   );
 }

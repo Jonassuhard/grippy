@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ScreenWrapper, PillButton } from "@/components/ui";
 import { DURATION_OPTIONS } from "@/types";
 
@@ -17,22 +16,16 @@ export function DurationScreen({
 
   return (
     <ScreenWrapper>
-      <motion.div
-        className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm animate-fadeIn">
         <h2 className="text-2xl font-bold text-[#7A4A3F] text-center mb-8">
           {t.title}
         </h2>
 
         <div className="grid grid-cols-2 gap-3">
           {DURATION_OPTIONS.map((min, i) => (
-            <motion.div
+            <div
               key={min}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }}
+              className={`animate-fadeIn-delay-${Math.min(i + 1, 3) as 1 | 2 | 3}`}
             >
               <PillButton
                 onClick={() => onSelect(min)}
@@ -41,21 +34,16 @@ export function DurationScreen({
               >
                 {min} min
               </PillButton>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Hand illustration — like Figma slide 4 */}
-        <motion.div
-          className="flex justify-center mt-6 opacity-40"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.4 }}
-          transition={{ delay: 0.5 }}
-        >
+        <div className="flex justify-center mt-6 opacity-40 animate-fadeIn-delay-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hand-outline.png" alt="" width={120} height={120} style={{ objectFit: "contain" }} />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </ScreenWrapper>
   );
 }

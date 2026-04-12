@@ -19,22 +19,15 @@ export function PickGripScreen({
 
   return (
     <ScreenWrapper>
-      <motion.h2
-        className="text-3xl font-bold text-[#7A4A3F] text-center mb-6"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <h2 className="text-3xl font-bold text-[#7A4A3F] text-center mb-6 animate-fadeIn">
         {t.title}
-      </motion.h2>
+      </h2>
 
       <div className="space-y-4 w-full max-w-sm">
         {grips.map((grip, i) => (
           <motion.button
             key={grip}
-            className="w-full bg-[rgba(226,192,184,0.6)] rounded-3xl p-5 flex items-center gap-4 cursor-pointer hover:bg-[rgba(226,192,184,0.8)] transition-colors"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.12 }}
+            className={`w-full bg-[rgba(226,192,184,0.6)] rounded-3xl p-5 flex items-center gap-4 cursor-pointer hover:bg-[rgba(226,192,184,0.8)] transition-colors animate-fadeIn-delay-${Math.min(i + 1, 3) as 1 | 2 | 3}`}
             whileTap={{ scale: 0.97 }}
             onClick={() => onSelect(grip)}
           >

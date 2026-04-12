@@ -54,11 +54,7 @@ export function BluetoothScreen({
 
   return (
     <ScreenWrapper>
-      <motion.div
-        className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm animate-fadeIn">
         {/* Header — real Figma bluetooth illustration */}
         <div className="flex items-center justify-center mb-6">
           <motion.div
@@ -73,16 +69,13 @@ export function BluetoothScreen({
         {/* Device list */}
         <div className="bg-[rgba(160,107,95,0.2)] rounded-2xl p-4 space-y-3">
           {devices.map((device, i) => (
-            <motion.div
+            <div
               key={device.id}
-              className="flex items-center justify-between px-4 py-3 bg-[rgba(160,107,95,0.3)] rounded-xl"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.15 }}
+              className={`flex items-center justify-between px-4 py-3 bg-[rgba(160,107,95,0.3)] rounded-xl animate-fadeIn-delay-${Math.min(i + 1, 3) as 1 | 2 | 3}`}
             >
               <span className="font-medium text-[#7A4A3F]">{device.name}</span>
               {device.connected && <AnimatedCheck delay={0} />}
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -95,11 +88,10 @@ export function BluetoothScreen({
             {t.scanning}
           </motion.p>
         )}
-      </motion.div>
+      </div>
 
       <motion.div
         className="w-full mt-6"
-        initial={{ opacity: 0 }}
         animate={{ opacity: allConnected ? 1 : 0.4 }}
         transition={{ duration: 0.3 }}
       >

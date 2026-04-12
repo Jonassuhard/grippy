@@ -71,47 +71,27 @@ export function BravoScreen({
         ))}
       </div>
 
-      <motion.div
-        className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-8 w-full max-w-sm flex flex-col items-center relative z-10"
-        initial={{ scale: 0.5, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-      >
-        <motion.h1
-          className="text-5xl font-bold text-[#7A4A3F] mb-6"
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.2, type: "spring" }}
-        >
+      <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-8 w-full max-w-sm flex flex-col items-center relative z-10 animate-fadeIn">
+        <h1 className="text-5xl font-bold text-[#7A4A3F] mb-6">
           {t.bravo}
-        </motion.h1>
+        </h1>
 
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.4, type: "spring" }}
+          transition={{ delay: 0.2, type: "spring" }}
         >
           <GrippyLogo size={180} />
         </motion.div>
 
-        <motion.p
-          className="text-[#7A4A3F] opacity-60 mt-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          transition={{ delay: 0.6 }}
-        >
+        <p className="text-[#7A4A3F] opacity-60 mt-4 animate-fadeIn-delay-2">
           {t.sub}
-        </motion.p>
-      </motion.div>
+        </p>
+      </div>
 
-      <motion.div
-        className="w-full mt-8 relative z-10"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-      >
+      <div className="w-full mt-8 relative z-10 animate-fadeIn-delay-3">
         <PillButton onClick={onNext}>{t.next}</PillButton>
-      </motion.div>
+      </div>
     </ScreenWrapper>
   );
 }

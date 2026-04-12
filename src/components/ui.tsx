@@ -12,7 +12,7 @@ export function Card({
   return (
     <motion.div
       className={`bg-[rgba(226,192,184,0.7)] backdrop-blur-sm rounded-3xl p-6 w-full max-w-sm mx-auto ${className}`}
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
       {...props}
@@ -66,15 +66,11 @@ export function ScreenWrapper({
   className?: string;
 }) {
   return (
-    <motion.div
+    <div
       className={`w-full max-w-sm mx-auto min-h-dvh flex flex-col items-center justify-center px-4 py-8 ${className}`}
-      initial={{ opacity: 0, y: 30, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -20, scale: 0.97 }}
-      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

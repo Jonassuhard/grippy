@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
 import { useAppState } from "@/lib/store";
 import { signInAnon, getLevels, saveLevels } from "@/lib/firebase";
 import { SplashScreen } from "@/components/screens/SplashScreen";
@@ -63,95 +62,85 @@ export default function Home() {
         {state.lang === "fr" ? "FR" : "ENG"}
       </button>
 
-      <AnimatePresence mode="wait">
-        {state.screen === "splash" && (
-          <SplashScreen key="splash" onNext={() => goTo("profile")} />
-        )}
+      {state.screen === "splash" && (
+        <SplashScreen onNext={() => goTo("profile")} />
+      )}
 
-        {state.screen === "profile" && (
-          <ProfileScreen
-            key="profile"
-            lang={state.lang}
-            onNext={(profile) => {
-              setProfile(profile);
-              goTo("bluetooth");
-            }}
-          />
-        )}
+      {state.screen === "profile" && (
+        <ProfileScreen
+          lang={state.lang}
+          onNext={(profile) => {
+            setProfile(profile);
+            goTo("bluetooth");
+          }}
+        />
+      )}
 
-        {state.screen === "bluetooth" && (
-          <BluetoothScreen
-            key="bluetooth"
-            lang={state.lang}
-            onNext={() => goTo("duration")}
-          />
-        )}
+      {state.screen === "bluetooth" && (
+        <BluetoothScreen
+          lang={state.lang}
+          onNext={() => goTo("duration")}
+        />
+      )}
 
-        {state.screen === "duration" && (
-          <DurationScreen
-            key="duration"
-            lang={state.lang}
-            onSelect={(min) => {
-              setDuration(min);
-              goTo("pickGrip");
-            }}
-          />
-        )}
+      {state.screen === "duration" && (
+        <DurationScreen
+          lang={state.lang}
+          onSelect={(min) => {
+            setDuration(min);
+            goTo("pickGrip");
+          }}
+        />
+      )}
 
-        {state.screen === "pickGrip" && (
-          <PickGripScreen
-            key="pickGrip"
-            lang={state.lang}
-            currentLevels={state.currentLevel}
-            onSelect={(grip) => {
-              setGrip(grip);
-              goTo("exercise");
-            }}
-          />
-        )}
+      {state.screen === "pickGrip" && (
+        <PickGripScreen
+          lang={state.lang}
+          currentLevels={state.currentLevel}
+          onSelect={(grip) => {
+            setGrip(grip);
+            goTo("exercise");
+          }}
+        />
+      )}
 
-        {state.screen === "exercise" && state.selectedGrip && (
-          <ExerciseScreen
-            key="exercise"
-            gripType={state.selectedGrip}
-            level={state.currentLevel[state.selectedGrip]}
-            durationMinutes={state.selectedDuration}
-            lang={state.lang}
-            onComplete={() => {
-              levelUp(state.selectedGrip!);
-              if (state.uid) {
-                const newLevels = { ...state.currentLevel, [state.selectedGrip!]: Math.min(4, state.currentLevel[state.selectedGrip!] + 1) as 0|1|2|3|4 };
-                saveLevels(state.uid, newLevels);
-              }
-              goTo("cooldown");
-            }}
-          />
-        )}
+      {state.screen === "exercise" && state.selectedGrip && (
+        <ExerciseScreen
+          gripType={state.selectedGrip}
+          level={state.currentLevel[state.selectedGrip]}
+          durationMinutes={state.selectedDuration}
+          lang={state.lang}
+          onComplete={() => {
+            levelUp(state.selectedGrip!);
+            if (state.uid) {
+              const newLevels = { ...state.currentLevel, [state.selectedGrip!]: Math.min(4, state.currentLevel[state.selectedGrip!] + 1) as 0|1|2|3|4 };
+              saveLevels(state.uid, newLevels);
+            }
+            goTo("cooldown");
+          }}
+        />
+      )}
 
-        {state.screen === "cooldown" && (
-          <CooldownScreen
-            key="cooldown"
-            lang={state.lang}
-            onComplete={() => goTo("bravo")}
-          />
-        )}
+      {state.screen === "cooldown" && (
+        <CooldownScreen
+          lang={state.lang}
+          onComplete={() => goTo("bravo")}
+        />
+      )}
 
-        {state.screen === "bravo" && (
-          <BravoScreen
-            key="bravo"
-            lang={state.lang}
-            onNext={() => goTo("comeBack")}
-          />
-        )}
+      {state.screen === "bravo" && (
+        <BravoScreen
+          lang={state.lang}
+          onNext={() => goTo("comeBack")}
+        />
+      )}
 
-        {state.screen === "comeBack" && (
-          <ComeBackScreen
-            key="comeBack"
-            lang={state.lang}
-            onHome={() => goTo("splash")}
-          />
-        )}
-      </AnimatePresence>
+      {state.screen === "comeBack" && (
+        <ComeBackScreen
+          lang={state.lang}
+          onHome={() => goTo("splash")}
+        />
+      )}
     </main>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { ScreenWrapper, InputField, PillButton } from "@/components/ui";
 import type { UserProfile } from "@/types";
 
@@ -29,12 +28,7 @@ export function ProfileScreen({
 
   return (
     <ScreenWrapper>
-      <motion.div
-        className="bg-[rgba(226,192,184,0.5)] rounded-[40px] p-6 w-full max-w-sm space-y-4"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
-      >
+      <div className="bg-[rgba(226,192,184,0.5)] rounded-[40px] p-6 w-full max-w-sm space-y-4 animate-fadeIn">
         {/* Decorative circle top */}
         <div className="flex justify-center mb-2">
           <div className="w-8 h-8 rounded-full bg-[rgba(160,107,95,0.3)]" />
@@ -59,18 +53,13 @@ export function ProfileScreen({
           type="number"
           placeholder={t.age}
         />
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="w-full mt-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
+      <div className="w-full mt-6 animate-fadeIn-delay-1">
         <PillButton onClick={() => onNext(profile)} disabled={!isValid}>
           {t.next}
         </PillButton>
-      </motion.div>
+      </div>
     </ScreenWrapper>
   );
 }
