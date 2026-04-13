@@ -17,7 +17,7 @@ const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: 
     { img: "/ex-rotation2.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm" },
   ],
   relaxation: [
-    { img: "/relax-palms.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands" },
+    { img: "/ex-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands" },
   ],
 };
 
@@ -121,9 +121,21 @@ export function ExerciseScreen({
       <ScreenWrapper>
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
-          {/* Hand with pink training zone — per grip type */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={TRAINING_IMAGES[gripType]} alt="training zone" width={200} height={200} style={{ objectFit: "contain" }} />
+          {/* Hand with pink training zone overlay — per grip type */}
+          <div className="relative w-[200px] h-[200px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/hand-outline.png" alt="training zone" width={200} height={200} style={{ objectFit: "contain" }} />
+            {/* Pink zone overlay */}
+            {gripType === "pressure" && (
+              <div className="absolute rounded-2xl bg-[rgba(192,130,120,0.35)]" style={{ bottom: "15%", right: "5%", width: "55%", height: "30%" }} />
+            )}
+            {gripType === "rotation" && (
+              <div className="absolute rounded-full bg-[rgba(192,130,120,0.35)]" style={{ top: "15%", left: "5%", width: "35%", height: "30%" }} />
+            )}
+            {gripType === "relaxation" && (
+              <div className="absolute rounded-full bg-[rgba(192,130,120,0.35)]" style={{ top: "35%", left: "25%", width: "50%", height: "35%" }} />
+            )}
+          </div>
           <div className="flex items-center gap-2 mt-6">
             <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
             <div className="w-16 h-16 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
