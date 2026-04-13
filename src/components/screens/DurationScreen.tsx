@@ -41,7 +41,7 @@ export function DurationScreen({
         {/* Hand illustration — like Figma slide 4 */}
         <div className="flex justify-center mt-6 opacity-40 animate-fadeIn-delay-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/hand-outline.png" alt="" width={120} height={120} style={{ objectFit: "contain" }} />
+          <img src="/logo-grippy.png" alt="Grippy" width={100} height={100} style={{ objectFit: "contain" }} />
         </div>
       </div>
     </ScreenWrapper>

@@ -120,7 +120,8 @@ export default function Home() {
               const newLevels = { ...state.currentLevel, [state.selectedGrip!]: Math.min(4, state.currentLevel[state.selectedGrip!] + 1) as 0|1|2|3|4 };
               saveLevels(state.uid, newLevels);
             }
-            goTo("cooldown");
+            // Detente: skip cooldown (exercise IS the relaxation), go direct to bravo
+            goTo(state.selectedGrip === "relaxation" ? "bravo" : "cooldown");
           }}
         />
       )}

@@ -17,8 +17,15 @@ const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: 
     { img: "/ex-rotation2.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm" },
   ],
   relaxation: [
-    { img: "/ex-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Relâchez doucement la pince et étirez les doigts", descEn: "Gently release the grip and stretch your fingers" },
+    { img: "/hand-massage.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Massez doucement la paume de la main", descEn: "Gently massage the palm of your hand" },
   ],
+};
+
+// Training area hand image per grip type (with pink zone)
+const TRAINING_IMAGES: Record<GripType, string> = {
+  pressure: "/hand-outline.png",   // hand with pink zone on last 2 fingers (page 8)
+  rotation: "/hand-outline.png",   // hand with rotation zone (page 11)
+  relaxation: "/hand-massage.png", // hand with pink zone on palm (page 14)
 };
 
 export function ExerciseScreen({
@@ -39,7 +46,6 @@ export function ExerciseScreen({
   const exercises = GRIP_EXERCISES[gripType];
   const totalExercises = exercises.length;
   const totalSeconds = durationMinutes * 60;
-  // Rest = 1/10 of exercise time, between exercises (not after last)
   const restCount = totalExercises - 1;
   const restDuration = Math.floor(totalSeconds / (totalExercises * 10));
   const exerciseDuration = Math.floor((totalSeconds - restDuration * restCount) / totalExercises);
@@ -66,7 +72,7 @@ export function ExerciseScreen({
     return () => clearInterval(interval);
   }, [paused, phase]);
 
-  // Auto-advance: exercise → rest → next exercise → ... → complete
+  // Auto-advance
   useEffect(() => {
     if (phase === "exercise" && phaseTimer >= exerciseDuration) {
       if (step < totalExercises - 1) {
@@ -83,7 +89,6 @@ export function ExerciseScreen({
     }
   }, [phase, phaseTimer, exerciseDuration, restDuration, step, totalExercises, onComplete]);
 
-  // Time runs out
   useEffect(() => {
     if (secondsLeft <= 0 && phase !== "training") onComplete();
   }, [secondsLeft, phase, onComplete]);
@@ -110,14 +115,15 @@ export function ExerciseScreen({
     ? { training: "Zone d'entraînement", start: "Commencer", next: "Suivant", pause: "Pause", resume: "Reprendre", rest: "Temps de repos", timeLeft: "Temps restant", back: "Changer de pince" }
     : { training: "Training area", start: "Start", next: "Next", pause: "Pause", resume: "Resume", rest: "Rest time", timeLeft: "Time left", back: "Change grip" };
 
-  // Training area (before exercises start)
+  // ─── Training area ───────────────────────────────────────
   if (phase === "training") {
     return (
       <ScreenWrapper>
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
+          {/* Hand with pink training zone — per grip type */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-grippy.png" alt="Grippy" width={160} height={160} style={{ objectFit: "contain" }} />
+          <img src={TRAINING_IMAGES[gripType]} alt="training zone" width={200} height={200} style={{ objectFit: "contain" }} />
           <div className="flex items-center gap-2 mt-6">
             <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
             <div className="w-16 h-16 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
@@ -139,19 +145,28 @@ export function ExerciseScreen({
     );
   }
 
-  // Rest phase
+  // ─── Rest phase — show NEXT exercise image to prepare ───
   if (phase === "rest") {
+    const nextExercise = exercises[step + 1];
     return (
       <ScreenWrapper>
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-4">{t.rest}</h2>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-grippy.png" alt="rest" width={120} height={120} style={{ objectFit: "contain", opacity: 0.6 }} />
-          <div className="mt-6">
+          {/* Show next exercise image to prepare the patient */}
+          {nextExercise && (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={nextExercise.img} alt="next exercise" width={180} height={120} style={{ objectFit: "contain", opacity: 0.7 }} />
+              <p className="text-xs text-[#7A4A3F] opacity-40 mt-2">
+                {lang === "fr" ? `Prochain : ${nextExercise.titleFr}` : `Next: ${nextExercise.titleEn}`}
+              </p>
+            </>
+          )}
+          <div className="mt-4">
             <TimerDisplay seconds={restDuration - phaseTimer} />
           </div>
           <p className="text-xs text-[#7A4A3F] opacity-40 mt-2">
-            {lang === "fr" ? `Exercice ${step + 2}/${totalExercises} dans` : `Exercise ${step + 2}/${totalExercises} in`} {restDuration - phaseTimer}s
+            {lang === "fr" ? `Exercice ${step + 2}/${totalExercises} dans` : `Exercise ${step + 2}/${totalExercises} in`} {Math.max(0, restDuration - phaseTimer)}s
           </p>
           <div className="mt-6 w-full">
             <PillButton onClick={skipToNext} variant="ghost">{t.next} &rarr;</PillButton>
@@ -161,7 +176,7 @@ export function ExerciseScreen({
     );
   }
 
-  // Exercise phase
+  // ─── Exercise phase ──────────────────────────────────────
   return (
     <ScreenWrapper>
       <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
