@@ -17,15 +17,15 @@ const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: 
     { img: "/ex-rotation2.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm" },
   ],
   relaxation: [
-    { img: "/hand-massage.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Massez doucement la paume de la main", descEn: "Gently massage the palm of your hand" },
+    { img: "/relax-palms.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands" },
   ],
 };
 
-// Training area hand image per grip type (with pink zone)
+// Training area hand image per grip type (with pink zone overlays)
 const TRAINING_IMAGES: Record<GripType, string> = {
-  pressure: "/hand-outline.png",   // hand with pink zone on last 2 fingers (page 8)
-  rotation: "/hand-outline.png",   // hand with rotation zone (page 11)
-  relaxation: "/hand-massage.png", // hand with pink zone on palm (page 14)
+  pressure: "/training-pressure.png",     // hand + pink rectangle on palm (Figma slide 11)
+  rotation: "/training-rotation.png",     // hand + pink circle under thumb (Figma slide 14)
+  relaxation: "/training-relaxation.png", // hand + pink oval center palm (Figma slide 15)
 };
 
 export function ExerciseScreen({
