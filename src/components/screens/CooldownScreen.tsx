@@ -52,7 +52,7 @@ export function CooldownScreen({
           transition={{ repeat: Infinity, duration: 3 }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/ex-relaxation.png" alt="palm to palm" width={180} height={120} style={{ objectFit: "contain" }} />
+          <img src="/palm-to-palm.png" alt="palm to palm" width={200} height={150} style={{ objectFit: "contain" }} />
         </motion.div>
 
         <div className="mt-6">
