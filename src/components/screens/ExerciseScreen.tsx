@@ -5,28 +5,61 @@ import { motion } from "framer-motion";
 import { ScreenWrapper, TimerDisplay, PillButton } from "@/components/ui";
 import type { GripType, ExerciseLevel } from "@/types";
 
-// Exercises per grip type — Zarina's spec
-const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: string; descFr: string; descEn: string }[]> = {
+// Zone overlay styles for each exercise (position on hand-outline.png)
+type ZoneStyle = { shape: "rect" | "circle" | "dots"; top?: string; left?: string; right?: string; bottom?: string; width: string; height: string };
+
+// Exercises per grip type with zone indicators
+const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: string; descFr: string; descEn: string; zone: ZoneStyle }[]> = {
   pressure: [
-    { img: "/ex-pression1.png", titleFr: "Pression 1", titleEn: "Pressure 1", descFr: "Serrez la pince avec tous les doigts", descEn: "Squeeze the grip with all fingers" },
-    { img: "/ex-pression2.png", titleFr: "Pression 2", titleEn: "Pressure 2", descFr: "Appuyez sur les embouts de la pince", descEn: "Press on the grip tips" },
-    { img: "/ex-pression3.png", titleFr: "Pression 3", titleEn: "Pressure 3", descFr: "Pressez la pince à pleine main", descEn: "Full hand pressure on the grip" },
+    // Pression 1 (page 9): zone from thumb to middle finger = right side of palm
+    { img: "/ex-pression1.png", titleFr: "Pression 1", titleEn: "Pressure 1", descFr: "Serrez la pince avec tous les doigts", descEn: "Squeeze the grip with all fingers",
+      zone: { shape: "rect", bottom: "18%", right: "5%", width: "55%", height: "30%" } },
+    // Pression 2 (page 10): dots on each fingertip
+    { img: "/ex-pression2.png", titleFr: "Pression 2", titleEn: "Pressure 2", descFr: "Appuyez sur les embouts de la pince", descEn: "Press on the grip tips",
+      zone: { shape: "dots", top: "0%", left: "0%", width: "100%", height: "100%" } },
+    // Pression 3 (page 8): zone from pinky to middle finger = left side
+    { img: "/ex-pression3.png", titleFr: "Pression 3", titleEn: "Pressure 3", descFr: "Pressez la pince à pleine main", descEn: "Full hand pressure on the grip",
+      zone: { shape: "rect", bottom: "20%", left: "5%", width: "50%", height: "28%" } },
   ],
   rotation: [
-    { img: "/ex-rotation1.png", titleFr: "Rotation 1", titleEn: "Rotation 1", descFr: "Tournez la pince entre le pouce et l'index", descEn: "Rotate the grip between thumb and index" },
-    { img: "/ex-rotation2.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm" },
+    // Rotation 1 (page 11): circle under thumb
+    { img: "/ex-rotation1.png", titleFr: "Rotation 1", titleEn: "Rotation 1", descFr: "Tournez la pince entre le pouce et l'index", descEn: "Rotate the grip between thumb and index",
+      zone: { shape: "circle", top: "10%", left: "3%", width: "35%", height: "35%" } },
+    // Rotation 2: same zone under thumb
+    { img: "/ex-rotation2.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm",
+      zone: { shape: "circle", top: "10%", left: "3%", width: "35%", height: "35%" } },
   ],
   relaxation: [
-    { img: "/ex-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands" },
+    // Détente (page 14): big oval center palm
+    { img: "/ex-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands",
+      zone: { shape: "circle", top: "25%", left: "15%", width: "65%", height: "45%" } },
   ],
 };
 
-// Training area hand image per grip type (with pink zone overlays)
-const TRAINING_IMAGES: Record<GripType, string> = {
-  pressure: "/training-pressure.png",     // hand + pink rectangle on palm (Figma slide 11)
-  rotation: "/training-rotation.png",     // hand + pink circle under thumb (Figma slide 14)
-  relaxation: "/training-relaxation.png", // hand + pink oval center palm (Figma slide 15)
-};
+// Zone hand component: hand-outline with pink overlay
+function ZoneHand({ zone, size = 120 }: { zone: ZoneStyle; size?: number }) {
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/hand-outline.png" alt="" width={size} height={size} style={{ objectFit: "contain" }} />
+      {zone.shape === "rect" && (
+        <div className="absolute rounded-2xl bg-[rgba(192,130,120,0.35)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
+      )}
+      {zone.shape === "circle" && (
+        <div className="absolute rounded-full bg-[rgba(192,130,120,0.35)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
+      )}
+      {zone.shape === "dots" && (
+        <>
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "5%", left: "42%", width: "14%", height: "14%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "0%", left: "58%", width: "12%", height: "12%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "5%", left: "72%", width: "12%", height: "12%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "15%", left: "82%", width: "11%", height: "11%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "30%", left: "2%", width: "13%", height: "13%" }} />
+        </>
+      )}
+    </div>
+  );
+}
 
 export function ExerciseScreen({
   gripType,
@@ -121,21 +154,8 @@ export function ExerciseScreen({
       <ScreenWrapper>
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
-          {/* Hand with pink training zone overlay — per grip type */}
-          <div className="relative w-[200px] h-[200px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hand-outline.png" alt="training zone" width={200} height={200} style={{ objectFit: "contain" }} />
-            {/* Pink zone overlay */}
-            {gripType === "pressure" && (
-              <div className="absolute rounded-2xl bg-[rgba(192,130,120,0.35)]" style={{ bottom: "15%", right: "5%", width: "55%", height: "30%" }} />
-            )}
-            {gripType === "rotation" && (
-              <div className="absolute rounded-full bg-[rgba(192,130,120,0.35)]" style={{ top: "15%", left: "5%", width: "35%", height: "30%" }} />
-            )}
-            {gripType === "relaxation" && (
-              <div className="absolute rounded-full bg-[rgba(192,130,120,0.35)]" style={{ top: "35%", left: "25%", width: "50%", height: "35%" }} />
-            )}
-          </div>
+          {/* Hand with pink training zone — uses first exercise's zone */}
+          <ZoneHand zone={exercises[0].zone} size={180} />
           <div className="flex items-center gap-2 mt-6">
             <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
             <div className="w-16 h-16 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
@@ -168,7 +188,8 @@ export function ExerciseScreen({
           {nextExercise && (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={nextExercise.img} alt="next exercise" width={180} height={120} style={{ objectFit: "contain", opacity: 0.7 }} />
+              <img src={nextExercise.img} alt="next exercise" width={160} height={100} style={{ objectFit: "contain", opacity: 0.7 }} />
+              <ZoneHand zone={nextExercise.zone} size={80} />
               <p className="text-xs text-[#7A4A3F] opacity-40 mt-2">
                 {lang === "fr" ? `Prochain : ${nextExercise.titleFr}` : `Next: ${nextExercise.titleEn}`}
               </p>
@@ -215,7 +236,12 @@ export function ExerciseScreen({
           <img src={currentExercise.img} alt={`step ${step + 1}`} width={200} height={140} style={{ objectFit: "contain" }} />
         </motion.div>
 
-        <p className="text-sm text-[#7A4A3F] opacity-60 mt-4 text-center px-4">
+        {/* Zone indicator: hand with pink overlay showing target area */}
+        <div className="mt-3">
+          <ZoneHand zone={currentExercise.zone} size={100} />
+        </div>
+
+        <p className="text-sm text-[#7A4A3F] opacity-60 mt-2 text-center px-4">
           {lang === "fr" ? currentExercise.descFr : currentExercise.descEn}
         </p>
 
