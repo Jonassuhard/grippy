@@ -116,10 +116,8 @@ export function ExerciseScreen({
       <ScreenWrapper>
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
-          <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hand-outline.png" alt="training zone" width={200} height={200} style={{ objectFit: "contain" }} />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-grippy.png" alt="Grippy" width={160} height={160} style={{ objectFit: "contain" }} />
           <div className="flex items-center gap-2 mt-6">
             <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
             <div className="w-16 h-16 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
@@ -148,7 +146,7 @@ export function ExerciseScreen({
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-4">{t.rest}</h2>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/relax-palms.png" alt="rest" width={160} height={100} style={{ objectFit: "contain" }} />
+          <img src="/logo-grippy.png" alt="rest" width={120} height={120} style={{ objectFit: "contain", opacity: 0.6 }} />
           <div className="mt-6">
             <TimerDisplay seconds={restDuration - phaseTimer} />
           </div>

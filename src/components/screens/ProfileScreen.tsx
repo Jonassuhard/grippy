@@ -53,6 +53,13 @@ export function ProfileScreen({
           type="number"
           placeholder={t.age}
         />
+        <InputField
+          label=""
+          value={profile.dischargeDate}
+          onChange={(v) => setProfile({ ...profile, dischargeDate: v })}
+          type="date"
+          placeholder={t.date}
+        />
       </div>
 
       <div className="w-full mt-6 animate-fadeIn-delay-1">
