@@ -17,9 +17,9 @@ const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: 
     // Pression 2 (page 10): dots on each fingertip
     { img: "/ex-pression2.png", titleFr: "Pression 2", titleEn: "Pressure 2", descFr: "Appuyez sur les embouts de la pince", descEn: "Press on the grip tips",
       zone: { shape: "dots", top: "0%", left: "0%", width: "100%", height: "100%" } },
-    // Pression 3 (page 8): zone from pinky to middle finger = left side
+    // Pression 3 (page 8): zone from pinky to middle finger = upper right side
     { img: "/ex-pression3.png", titleFr: "Pression 3", titleEn: "Pressure 3", descFr: "Pressez la pince à pleine main", descEn: "Full hand pressure on the grip",
-      zone: { shape: "rect", bottom: "20%", left: "5%", width: "50%", height: "28%" } },
+      zone: { shape: "rect", top: "22%", left: "62%", width: "38%", height: "32%" } },
   ],
   rotation: [
     // Rotation 1 (page 11): circle under thumb
@@ -30,8 +30,8 @@ const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: 
       zone: { shape: "circle", top: "10%", left: "3%", width: "35%", height: "35%" } },
   ],
   relaxation: [
-    // Détente (page 14): big oval center palm
-    { img: "/ex-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands",
+    // Détente (page 14): palm to palm with big pink oval
+    { img: "/palm-to-palm.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands",
       zone: { shape: "circle", top: "25%", left: "15%", width: "65%", height: "45%" } },
   ],
 };
@@ -51,16 +51,16 @@ function ZoneHand({ zone, size = 120 }: { zone: ZoneStyle; size?: number }) {
       )}
       {zone.shape === "dots" && (
         <>
-          {/* Thumb tip (peak top-center left) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "-3%", left: "43%", width: "13%", aspectRatio: "1" }} />
-          {/* Index fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "24%", left: "59%", width: "12%", aspectRatio: "1" }} />
-          {/* Middle fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "19%", left: "70%", width: "12%", aspectRatio: "1" }} />
-          {/* Ring fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "18%", left: "81%", width: "12%", aspectRatio: "1" }} />
-          {/* Pinky fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "22%", left: "91%", width: "11%", aspectRatio: "1" }} />
+          {/* Thumb tip - peak at (50%, 0%) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "-5%", left: "44%", width: "12%", aspectRatio: "1" }} />
+          {/* Index fingertip - contour at (62%, 30%) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "24%", left: "56%", width: "12%", aspectRatio: "1" }} />
+          {/* Middle fingertip - contour at (74%, 27%) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "21%", left: "68%", width: "12%", aspectRatio: "1" }} />
+          {/* Ring fingertip - contour at (84%, 25%) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "19%", left: "78%", width: "12%", aspectRatio: "1" }} />
+          {/* Pinky fingertip - contour at (91%, 26%) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "20%", left: "86%", width: "12%", aspectRatio: "1" }} />
         </>
       )}
     </div>
