@@ -5,20 +5,72 @@ import { motion } from "framer-motion";
 import { ScreenWrapper, TimerDisplay, PillButton } from "@/components/ui";
 import type { GripType, ExerciseLevel } from "@/types";
 
-// Each exercise has a pre-drawn zone image (hand with pink zone baked in)
-const GRIP_EXERCISES: Record<GripType, { img: string; zoneImg: string; titleFr: string; titleEn: string; descFr: string; descEn: string }[]> = {
-  pressure: [
-    { img: "/ex-pression1.png", zoneImg: "/training-pressure.png",  titleFr: "Pression 1", titleEn: "Pressure 1", descFr: "Serrez la pince avec tous les doigts", descEn: "Squeeze the grip with all fingers" },
-    { img: "/ex-pression2.png", zoneImg: "/training-pressure2.png", titleFr: "Pression 2", titleEn: "Pressure 2", descFr: "Appuyez sur les embouts de la pince", descEn: "Press on the grip tips" },
-    { img: "/ex-pression3.png", zoneImg: "/training-pressure3.png", titleFr: "Pression 3", titleEn: "Pressure 3", descFr: "Pressez la pince à pleine main", descEn: "Full hand pressure on the grip" },
-  ],
-  rotation: [
-    { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Rotation 1", titleEn: "Rotation 1", descFr: "Tournez la pince entre le pouce et l'index", descEn: "Rotate the grip between thumb and index" },
-    { img: "/ex-rotation2.png", zoneImg: "/training-rotation.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm" },
-  ],
-  relaxation: [
-    { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands" },
-  ],
+// Exercises per grip type + level — exactement comme le PDF page 16
+type Exo = { img: string; zoneImg: string; titleFr: string; titleEn: string; descFr: string; descEn: string };
+
+const LEVELED_EXERCISES: Record<GripType, Record<ExerciseLevel, Exo[]>> = {
+  pressure: {
+    0: [
+      { img: "/ex-pression1.png", zoneImg: "/training-pressure.png", titleFr: "Taper sur un clavier", titleEn: "Tap keyboard", descFr: "Taper sur un clavier ou un écran tactile", descEn: "Tap on a keyboard or touchscreen" },
+      { img: "/ex-pression1.png", zoneImg: "/training-pressure.png", titleFr: "Actionner un interrupteur", titleEn: "Flip a switch", descFr: "Actionner un interrupteur", descEn: "Flip a light switch" },
+    ],
+    1: [
+      { img: "/ex-pression2.png", zoneImg: "/training-pressure2.png", titleFr: "Presser un dentifrice", titleEn: "Press toothpaste", descFr: "Presser un tube de dentifrice", descEn: "Squeeze a toothpaste tube" },
+      { img: "/ex-pression2.png", zoneImg: "/training-pressure2.png", titleFr: "Écrire avec un stylo", titleEn: "Write with a pen", descFr: "Écrire avec un stylo", descEn: "Write with a pen" },
+    ],
+    2: [
+      { img: "/ex-pression2.png", zoneImg: "/training-pressure2.png", titleFr: "Utiliser une agrafeuse", titleEn: "Use a stapler", descFr: "Utiliser une agrafeuse de bureau", descEn: "Use an office stapler" },
+      { img: "/ex-pression2.png", zoneImg: "/training-pressure2.png", titleFr: "Ouvrir une bouteille", titleEn: "Open a bottle", descFr: "Ouvrir une bouteille d'eau neuve", descEn: "Open a new water bottle" },
+      { img: "/ex-pression3.png", zoneImg: "/training-pressure3.png", titleFr: "Dévisser un bocal", titleEn: "Unscrew a jar", descFr: "Dévisser un bocal de conserve coincé", descEn: "Unscrew a stuck jar" },
+    ],
+    3: [
+      { img: "/ex-pression3.png", zoneImg: "/training-pressure3.png", titleFr: "Utiliser un sécateur", titleEn: "Use pruning shears", descFr: "Utiliser un sécateur", descEn: "Use pruning shears" },
+      { img: "/ex-pression3.png", zoneImg: "/training-pressure3.png", titleFr: "Pétrir de la pâte", titleEn: "Knead dough", descFr: "Pétrir de la pâte à pain", descEn: "Knead bread dough" },
+    ],
+    4: [
+      { img: "/ex-pression3.png", zoneImg: "/training-pressure3.png", titleFr: "Ouvrir porte lourde", titleEn: "Open heavy door", descFr: "Ouvrir une porte blindée ou lourde coincée", descEn: "Open an armored or stuck door" },
+    ],
+  },
+  rotation: {
+    0: [
+      { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Tourner une bague", titleEn: "Turn a ring", descFr: "Tourner une bague au doigt", descEn: "Turn a ring on your finger" },
+      { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Ajuster un bouton", titleEn: "Adjust a knob", descFr: "Ajuster un bouton de volume ou de four", descEn: "Adjust a volume or oven knob" },
+    ],
+    1: [
+      { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Utiliser un tournevis", titleEn: "Use a screwdriver", descFr: "Utiliser un tournevis pour une petite vis", descEn: "Use a screwdriver for a small screw" },
+      { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Tourner une clé", titleEn: "Turn a key", descFr: "Tourner une clé dans une serrure", descEn: "Turn a key in a lock" },
+      { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Ouvrir un robinet", titleEn: "Open a tap", descFr: "Ouvrir un robinet à vis", descEn: "Open a screw tap" },
+    ],
+    2: [
+      { img: "/ex-rotation2.png", zoneImg: "/training-rotation2.png", titleFr: "Dévisser un bouchon", titleEn: "Unscrew a cap", descFr: "Dévisser un bouchon de bouteille de gaz ou de bidon", descEn: "Unscrew a gas bottle cap" },
+      { img: "/ex-rotation2.png", zoneImg: "/training-rotation2.png", titleFr: "Essorer un tissu", titleEn: "Wring a cloth", descFr: "Essorer une serpillière ou un vêtement à la main", descEn: "Wring a mop or clothes by hand" },
+    ],
+    3: [
+      { img: "/ex-rotation2.png", zoneImg: "/training-rotation2.png", titleFr: "Tourner un volant", titleEn: "Turn a wheel", descFr: "Tourner un volant de voiture sans direction assistée", descEn: "Turn a car wheel without power steering" },
+      { img: "/ex-rotation2.png", zoneImg: "/training-rotation2.png", titleFr: "Ouvrir un bocal scellé", titleEn: "Open sealed jar", descFr: "Ouvrir un bocal de conserve scellé", descEn: "Open a sealed preserve jar" },
+    ],
+    4: [
+      { img: "/ex-rotation2.png", zoneImg: "/training-rotation2.png", titleFr: "Dévisser un écrou", titleEn: "Unscrew a nut", descFr: "Dévisser un écrou de roue de voiture grippé", descEn: "Unscrew a stuck car wheel nut" },
+      { img: "/ex-rotation2.png", zoneImg: "/training-rotation2.png", titleFr: "Ouvrir un bocal industriel", titleEn: "Open industrial jar", descFr: "Ouvrir un bocal de conserve industriel sous vide", descEn: "Open a vacuum-sealed industrial jar" },
+    ],
+  },
+  relaxation: {
+    0: [
+      { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Masser la paume", titleEn: "Massage palm", descFr: "Masser sous la main (comme la pâte à pain)", descEn: "Massage under the hand (like kneading bread)" },
+    ],
+    1: [
+      { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Pincer doigt par doigt", titleEn: "Pinch each finger", descFr: "Pincer entre le pouce et chaque doigt individuellement", descEn: "Pinch between thumb and each finger individually" },
+    ],
+    2: [
+      { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Presser doigts ciblés", titleEn: "Targeted finger press", descFr: "Presser avec les doigts contre la paume de façon ciblée", descEn: "Press fingers against palm in targeted way" },
+    ],
+    3: [
+      { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Poing fermé", titleEn: "Closed fist", descFr: "Une pression à pleine main (poing fermé)", descEn: "Full hand pressure (closed fist)" },
+    ],
+    4: [
+      { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Poing fermé avancé", titleEn: "Advanced fist", descFr: "Pression maximale à pleine main", descEn: "Maximum full hand pressure" },
+    ],
+  },
 };
 
 // Zone hand component: shows pre-drawn training image with zone baked in
@@ -44,7 +96,7 @@ export function ExerciseScreen({
   onBackToMenu: () => void;
   lang: "en" | "fr";
 }) {
-  const exercises = GRIP_EXERCISES[gripType];
+  const exercises = LEVELED_EXERCISES[gripType][level];
   const totalExercises = exercises.length;
   const totalSeconds = durationMinutes * 60;
   const restCount = totalExercises - 1;

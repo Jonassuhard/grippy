@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Grippy — Hand Rehabilitation",
-  description: "Post-stroke hand rehabilitation companion app. Project Handful by Zarina Ibragimova & Daphné Valluis, ENSAAMA.",
+  description: "Application mobile de rééducation de la main post-sepsis. Project Handful par Zarina Ibragimova & Daphné Valluis, ENSAAMA.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
