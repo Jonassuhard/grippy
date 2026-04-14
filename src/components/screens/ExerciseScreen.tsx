@@ -36,30 +36,31 @@ const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: 
   ],
 };
 
-// Zone hand component: hand-outline with pink overlay
+// Zone hand component: hand-outline (411x351, ratio 1.17) with pink overlay
+// Wrapper uses aspect-ratio to match image exactly so % positions align
 function ZoneHand({ zone, size = 120 }: { zone: ZoneStyle; size?: number }) {
   return (
-    <div className="relative" style={{ width: size, height: size }}>
+    <div className="relative" style={{ width: size, aspectRatio: "411 / 351" }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/hand-outline.png" alt="" width={size} height={size} style={{ objectFit: "contain" }} />
+      <img src="/hand-outline.png" alt="" style={{ width: "100%", height: "100%", objectFit: "fill" }} />
       {zone.shape === "rect" && (
-        <div className="absolute rounded-2xl bg-[rgba(192,130,120,0.35)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
+        <div className="absolute rounded-2xl bg-[rgba(192,130,120,0.4)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
       )}
       {zone.shape === "circle" && (
-        <div className="absolute rounded-full bg-[rgba(192,130,120,0.35)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
+        <div className="absolute rounded-full bg-[rgba(192,130,120,0.4)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
       )}
       {zone.shape === "dots" && (
         <>
-          {/* Thumb tip (peak on left) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "-2%", left: "44%", width: "12%", height: "12%" }} />
+          {/* Thumb tip (peak top-center left) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "-3%", left: "43%", width: "13%", aspectRatio: "1" }} />
           {/* Index fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "26%", left: "60%", width: "11%", height: "11%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "24%", left: "59%", width: "12%", aspectRatio: "1" }} />
           {/* Middle fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "22%", left: "71%", width: "11%", height: "11%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "19%", left: "70%", width: "12%", aspectRatio: "1" }} />
           {/* Ring fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "21%", left: "82%", width: "11%", height: "11%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "18%", left: "81%", width: "12%", aspectRatio: "1" }} />
           {/* Pinky fingertip */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "24%", left: "91%", width: "10%", height: "10%" }} />
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.6)]" style={{ top: "22%", left: "91%", width: "11%", aspectRatio: "1" }} />
         </>
       )}
     </div>
