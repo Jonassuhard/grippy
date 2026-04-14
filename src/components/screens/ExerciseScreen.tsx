@@ -5,65 +5,27 @@ import { motion } from "framer-motion";
 import { ScreenWrapper, TimerDisplay, PillButton } from "@/components/ui";
 import type { GripType, ExerciseLevel } from "@/types";
 
-// Zone overlay styles for each exercise (position on hand-outline.png)
-type ZoneStyle = { shape: "rect" | "circle" | "dots"; top?: string; left?: string; right?: string; bottom?: string; width: string; height: string };
-
-// Exercises per grip type with zone indicators
-const GRIP_EXERCISES: Record<GripType, { img: string; titleFr: string; titleEn: string; descFr: string; descEn: string; zone: ZoneStyle }[]> = {
+// Each exercise has a pre-drawn zone image (hand with pink zone baked in)
+const GRIP_EXERCISES: Record<GripType, { img: string; zoneImg: string; titleFr: string; titleEn: string; descFr: string; descEn: string }[]> = {
   pressure: [
-    // Pression 1 (page 9): zone from thumb to middle finger = right side of palm
-    { img: "/ex-pression1.png", titleFr: "Pression 1", titleEn: "Pressure 1", descFr: "Serrez la pince avec tous les doigts", descEn: "Squeeze the grip with all fingers",
-      zone: { shape: "rect", bottom: "18%", right: "5%", width: "55%", height: "30%" } },
-    // Pression 2 (page 10): dots on each fingertip
-    { img: "/ex-pression2.png", titleFr: "Pression 2", titleEn: "Pressure 2", descFr: "Appuyez sur les embouts de la pince", descEn: "Press on the grip tips",
-      zone: { shape: "dots", top: "0%", left: "0%", width: "100%", height: "100%" } },
-    // Pression 3 (page 8): zone from pinky to middle finger = upper right side
-    { img: "/ex-pression3.png", titleFr: "Pression 3", titleEn: "Pressure 3", descFr: "Pressez la pince à pleine main", descEn: "Full hand pressure on the grip",
-      zone: { shape: "rect", top: "22%", left: "62%", width: "38%", height: "32%" } },
+    { img: "/ex-pression1.png", zoneImg: "/training-pressure.png",  titleFr: "Pression 1", titleEn: "Pressure 1", descFr: "Serrez la pince avec tous les doigts", descEn: "Squeeze the grip with all fingers" },
+    { img: "/ex-pression2.png", zoneImg: "/training-pressure2.png", titleFr: "Pression 2", titleEn: "Pressure 2", descFr: "Appuyez sur les embouts de la pince", descEn: "Press on the grip tips" },
+    { img: "/ex-pression3.png", zoneImg: "/training-pressure3.png", titleFr: "Pression 3", titleEn: "Pressure 3", descFr: "Pressez la pince à pleine main", descEn: "Full hand pressure on the grip" },
   ],
   rotation: [
-    // Rotation 1 (page 11): circle under thumb
-    { img: "/ex-rotation1.png", titleFr: "Rotation 1", titleEn: "Rotation 1", descFr: "Tournez la pince entre le pouce et l'index", descEn: "Rotate the grip between thumb and index",
-      zone: { shape: "circle", top: "10%", left: "3%", width: "35%", height: "35%" } },
-    // Rotation 2: same zone under thumb
-    { img: "/ex-rotation2.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm",
-      zone: { shape: "circle", top: "10%", left: "3%", width: "35%", height: "35%" } },
+    { img: "/ex-rotation1.png", zoneImg: "/training-rotation.png", titleFr: "Rotation 1", titleEn: "Rotation 1", descFr: "Tournez la pince entre le pouce et l'index", descEn: "Rotate the grip between thumb and index" },
+    { img: "/ex-rotation2.png", zoneImg: "/training-rotation.png", titleFr: "Rotation 2", titleEn: "Rotation 2", descFr: "Faites pivoter la pince dans la paume", descEn: "Pivot the grip in your palm" },
   ],
   relaxation: [
-    // Détente (page 14): palm to palm with big pink oval
-    { img: "/palm-to-palm.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands",
-      zone: { shape: "circle", top: "25%", left: "15%", width: "65%", height: "45%" } },
+    { img: "/ex-relaxation.png", zoneImg: "/training-relaxation.png", titleFr: "Détente", titleEn: "Relaxation", descFr: "Paume contre paume, détendez vos mains", descEn: "Palm to palm, relax your hands" },
   ],
 };
 
-// Zone hand component: hand-outline (411x351, ratio 1.17) with pink overlay
-// Wrapper uses aspect-ratio to match image exactly so % positions align
-function ZoneHand({ zone, size = 120 }: { zone: ZoneStyle; size?: number }) {
+// Zone hand component: shows pre-drawn training image with zone baked in
+function ZoneHand({ src, size = 120 }: { src: string; size?: number }) {
   return (
-    <div className="relative" style={{ width: size, aspectRatio: "411 / 351" }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/hand-outline.png" alt="" style={{ width: "100%", height: "100%", objectFit: "fill" }} />
-      {zone.shape === "rect" && (
-        <div className="absolute rounded-2xl bg-[rgba(192,130,120,0.4)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
-      )}
-      {zone.shape === "circle" && (
-        <div className="absolute rounded-full bg-[rgba(192,130,120,0.4)]" style={{ top: zone.top, left: zone.left, right: zone.right, bottom: zone.bottom, width: zone.width, height: zone.height }} />
-      )}
-      {zone.shape === "dots" && (
-        <>
-          {/* Thumb tip - peak at (50%, 0%) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "-5%", left: "44%", width: "12%", aspectRatio: "1" }} />
-          {/* Index fingertip - contour at (62%, 30%) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "24%", left: "56%", width: "12%", aspectRatio: "1" }} />
-          {/* Middle fingertip - contour at (74%, 27%) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "21%", left: "68%", width: "12%", aspectRatio: "1" }} />
-          {/* Ring fingertip - contour at (84%, 25%) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "19%", left: "78%", width: "12%", aspectRatio: "1" }} />
-          {/* Pinky fingertip - contour at (91%, 26%) */}
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.65)]" style={{ top: "20%", left: "86%", width: "12%", aspectRatio: "1" }} />
-        </>
-      )}
-    </div>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt="training zone" style={{ width: size, height: "auto", objectFit: "contain" }} />
   );
 }
 
@@ -161,7 +123,7 @@ export function ExerciseScreen({
         <div className="bg-[rgba(226,192,184,0.5)] rounded-3xl p-6 w-full max-w-sm flex flex-col items-center animate-fadeIn">
           <h2 className="text-2xl font-bold text-[#7A4A3F] mb-6">{t.training}</h2>
           {/* Hand with pink training zone — uses first exercise's zone */}
-          <ZoneHand zone={exercises[0].zone} size={180} />
+          <ZoneHand src={exercises[0].zoneImg} size={180} />
           <div className="flex items-center gap-2 mt-6">
             <div className="w-3 h-3 rounded-full bg-[rgba(122,74,63,0.2)]" />
             <div className="w-16 h-16 rounded-full bg-[rgba(122,74,63,0.15)] flex items-center justify-center">
@@ -195,7 +157,7 @@ export function ExerciseScreen({
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={nextExercise.img} alt="next exercise" width={160} height={100} style={{ objectFit: "contain", opacity: 0.7 }} />
-              <ZoneHand zone={nextExercise.zone} size={80} />
+              <ZoneHand src={nextExercise.zoneImg} size={100} />
               <p className="text-xs text-[#7A4A3F] opacity-40 mt-2">
                 {lang === "fr" ? `Prochain : ${nextExercise.titleFr}` : `Next: ${nextExercise.titleEn}`}
               </p>
@@ -244,7 +206,7 @@ export function ExerciseScreen({
 
         {/* Zone indicator: hand with pink overlay showing target area */}
         <div className="mt-3">
-          <ZoneHand zone={currentExercise.zone} size={100} />
+          <ZoneHand src={currentExercise.zoneImg} size={120} />
         </div>
 
         <p className="text-sm text-[#7A4A3F] opacity-60 mt-2 text-center px-4">
