@@ -50,11 +50,16 @@ function ZoneHand({ zone, size = 120 }: { zone: ZoneStyle; size?: number }) {
       )}
       {zone.shape === "dots" && (
         <>
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "5%", left: "42%", width: "14%", height: "14%" }} />
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "0%", left: "58%", width: "12%", height: "12%" }} />
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "5%", left: "72%", width: "12%", height: "12%" }} />
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "15%", left: "82%", width: "11%", height: "11%" }} />
-          <div className="absolute rounded-full bg-[rgba(192,130,120,0.5)]" style={{ top: "30%", left: "2%", width: "13%", height: "13%" }} />
+          {/* Thumb tip (peak on left) */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "-2%", left: "44%", width: "12%", height: "12%" }} />
+          {/* Index fingertip */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "26%", left: "60%", width: "11%", height: "11%" }} />
+          {/* Middle fingertip */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "22%", left: "71%", width: "11%", height: "11%" }} />
+          {/* Ring fingertip */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "21%", left: "82%", width: "11%", height: "11%" }} />
+          {/* Pinky fingertip */}
+          <div className="absolute rounded-full bg-[rgba(192,130,120,0.55)]" style={{ top: "24%", left: "91%", width: "10%", height: "10%" }} />
         </>
       )}
     </div>
